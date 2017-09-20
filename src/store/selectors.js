@@ -1,10 +1,11 @@
 // https://github.com/diegohaz/arc/wiki/Selectors
+const camelCase = require('lodash/camelCase')
 const upperFirst = require('lodash/upperFirst')
 
 const req = require.context('.', true, /\.\/.+\/selectors\.js$/)
 
 req.keys().forEach((key) => {
-  const storeName = key.replace(/\.\/(.+)\/.+$/, '$1')
+  const storeName = camelCase(key.replace(/\.\/(.+)\/.+$/, '$1'))
   const fromName = `from${upperFirst(storeName)}`
   const selectors = req(key)
   const getState = (state = {}) => state[storeName] || {}
